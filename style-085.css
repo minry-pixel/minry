@@ -1,0 +1,51 @@
+/* Reset dan font global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Header utama - diperkecil lagi */
+.site-header {
+    background-color: #204f2b;
+    padding: 2px 0; /* lebih kecil lagi */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo - diperkecil lagi */
+.logo img {
+    height: 22px; /* lebih kecil lagi */
+    width: auto;
+    display: block;
+}
+
+/* Navigasi utama - padding lebih kecil lagi */
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+}
+
+.main-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 2px 6px; /* lebih kecil lagi */
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.main-nav a.active,
+.main-nav a:hover {
+    background: #357a38;
+}

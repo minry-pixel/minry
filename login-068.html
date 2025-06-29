@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yasmin Music - Login</title>
+  <link rel="stylesheet" href="style-068.css">
+  <link rel="stylesheet" href="login-068.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"/>
+  <link rel="icon" type="image/png" href="musik.png">
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <div class="logo">
+        <a href="home-068.html">
+        <img src="musik.png" alt="Yasmin Music Logo" class="logo-image"/>
+        </a>
+      </div>
+      <nav class="navigation">
+        <a href="home-068.html">Home</a>
+        <a href="profile-068.html">Profile</a>
+        <a href="transaction-068.html">Transaction</a>
+        <a href="login-068.html" class="active">Login</a>
+      </nav>
+      <div class="login-button">
+        
+      </div>
+    </div>
+  </header>
+  <div class="login-section">
+    <form class="login-form" onsubmit="return validasiLogin(event)">
+      <h2>Login</h2>
+      <div id="login-alert" style="display:none;margin-bottom:14px;"></div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" autocomplete="off">
+        <div id="username-error" class="input-error"></div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="off">
+        <div id="password-error" class="input-error"></div>
+      </div>
+      <div class="form-group" style="display:flex;align-items:center;justify-content:space-between;">
+        <label style="display:flex;align-items:center;gap:6px;">
+          <input type="checkbox" id="remember" name="remember" style="accent-color:#001f4d;"> Remember me
+        </label>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+      <button type="submit">Masuk</button>
+      <div class="signup-link">Belum punya akun? <a href="#" style="color:#ff6dbb;">Sign Up</a></div>
+    </form>
+    <script>
+      function validasiLogin(e) {
+        e.preventDefault();
+        var user = document.getElementById('username').value.trim();
+        var pass = document.getElementById('password').value.trim();
+        var userErr = document.getElementById('username-error');
+        var passErr = document.getElementById('password-error');
+        var alertBox = document.getElementById('login-alert');
+        var valid = true;
+        userErr.textContent = '';
+        passErr.textContent = '';
+        alertBox.style.display = 'none';
+        if (!user) {
+          userErr.textContent = 'Username wajib diisi!';
+          valid = false;
+        }
+        if (!pass) {
+          passErr.textContent = 'Password wajib diisi!';
+          valid = false;
+        }
+        if (!valid) return false;
+        alertBox.style.display = 'block';
+        alertBox.style.background = '#22bb33';
+        alertBox.style.color = '#fff';
+        alertBox.style.padding = '8px 12px';
+        alertBox.style.borderRadius = '6px';
+        alertBox.textContent = 'Login berhasil!';
+        setTimeout(function(){
+          alertBox.style.display = 'none';
+          window.location.href = 'home-068.html';
+        }, 1200);
+        document.querySelector('.login-form').reset();
+        return false;
+      }
+    </script>
+  </div>
+</body>
+</html>

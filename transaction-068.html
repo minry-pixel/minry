@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yasmin Music - Transaction</title>
+  <link rel="stylesheet" href="style-068.css">
+  <link rel="stylesheet" href="transaction-068.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"/>
+  <link rel="icon" type="image/png" href="musik.png">
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <div class="logo">
+        <a href="home-068.html">
+        <img src="musik.png" alt="Yasmin Music Logo" class="logo-image"/>
+        </a>
+      </div>
+      <nav class="navigation">
+        <a href="home-068.html">Home</a>
+        <a href="profile-068.html">Profile</a>
+        <a href="transaction-068.html" class="active">Transaction</a>
+        <a href="login-068.html">Login</a>
+      </nav>
+      <div class="login-button">
+        
+      </div>
+    </div>
+  </header>
+  <section class="transaction-section">
+    <h2>Daftar Transaksi</h2>
+    <form class="transaction-form" onsubmit="tambahTransaksi(event)">
+      <div>
+        <label for="id">ID</label>
+        <input type="text" id="id" name="id" required style="width:100%;padding:7px;border-radius:6px;border:1px solid #ccc;">
+      </div>
+      <div>
+        <label for="jenis">Jenis</label>
+        <select id="jenis" name="jenis" required style="width:100%;padding:7px;border-radius:6px;border:1px solid #ccc;" onchange="updateHarga()">
+          <option value="">-- Pilih Jenis --</option>
+          <option value="Pembelian Lagu" data-harga="15000">Pembelian Lagu</option>
+          <option value="Top Up Saldo" data-harga="50000">Top Up Saldo</option>
+          <option value="Pembelian Album" data-harga="120000">Pembelian Album</option>
+          <option value="Membership" data-harga="250000">Membership</option>
+        </select>
+      </div>
+      <div>
+        <label for="harga">Harga</label>
+        <input type="text" id="harga" name="harga" required readonly>
+      </div>
+      <button type="submit">Tambah</button>
+    </form>
+    <div class="filter-bar">
+      <div>
+        <label for="filterJenis">Filter Jenis</label>
+        <select id="filterJenis" onchange="filterTable()">
+          <option value="">Semua</option>
+          <option value="Pembelian Lagu">Pembelian Lagu</option>
+          <option value="Top Up Saldo">Top Up Saldo</option>
+          <option value="Pembelian Album">Pembelian Album</option>
+          <option value="Membership">Membership</option>
+        </select>
+      </div>
+      <div>
+        <label for="searchTransaksi">Cari Transaksi</label>
+        <input type="text" id="searchTransaksi" oninput="filterTable()" placeholder="Cari ID atau Jenis...">
+      </div>
+    </div>
+    <table class="transaction-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Jenis</th>
+          <th>Harga</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data transaksi akan muncul di sini melalui JavaScript -->
+      </tbody>
+    </table>
+  </section>
+  <script>
+      // Helper untuk ambil elemen
+      const $ = s => document.querySelector(s);
+      // Data transaksi awal
+      const dataTransaksi = [
+        {id: '1', jenis: 'Pembelian Lagu', harga: 'Rp 15.000'},
+        {id: '2', jenis: 'Top Up Saldo', harga: 'Rp 50.000'},
+        {id: '3', jenis: 'Pembelian Album', harga: 'Rp 120.000'},
+        {id: '4', jenis: 'Pembelian Lagu', harga: 'Rp 15.000'},
+        {id: '5', jenis: 'Top Up Saldo', harga: 'Rp 50.000'},
+        {id: '6', jenis: 'Pembelian Album', harga: 'Rp 120.000'}
+      ];
+      function renderTransaksi() {
+        const tbody = document.querySelector('.transaction-table tbody');
+        tbody.innerHTML = '';
+        dataTransaksi.forEach(trx => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${trx.id}</td><td>${trx.jenis}</td><td>${trx.harga}</td><td><button class='btn-hapus' onclick='hapusBaris(this)'>Hapus</button></td>`;
+          tbody.appendChild(tr);
+        });
+      }
+      function updateHarga() {
+        const jenis = $('#jenis');
+        const harga = $('#harga');
+        const nominal = jenis.options[jenis.selectedIndex].getAttribute('data-harga');
+        harga.value = nominal ? 'Rp ' + Number(nominal).toLocaleString('id-ID') : '';
+      }
+      function tambahTransaksi(e) {
+        e.preventDefault();
+        const id = $('#id').value, jenis = $('#jenis').value, harga = $('#harga').value;
+        if(!id || !jenis || !harga) return;
+        dataTransaksi.push({id, jenis, harga});
+        renderTransaksi();
+        $('.transaction-form').reset();
+        updateHarga();
+      }
+      function hapusBaris(btn) {
+        const row = btn.closest('tr');
+        const id = row.cells[0].textContent;
+        const idx = dataTransaksi.findIndex(trx => trx.id === id);
+        if(idx !== -1) dataTransaksi.splice(idx, 1);
+        renderTransaksi();
+      }
+      function filterTable() {
+        const filterJenis = $('#filterJenis').value.toLowerCase();
+        const search = $('#searchTransaksi').value.toLowerCase();
+        document.querySelectorAll('.transaction-table tbody tr').forEach(row => {
+          const [id, jenis, harga] = [0,1,2].map(i => row.cells[i].textContent.toLowerCase());
+          let show = true;
+          if (filterJenis && jenis !== filterJenis) show = false;
+          if (search && !(id.includes(search) || jenis.includes(search) || harga.includes(search))) show = false;
+          row.style.display = show ? '' : 'none';
+        });
+      }
+      // Render data transaksi awal saat halaman dimuat
+      renderTransaksi();
+    </script>
+</body>
+</html>

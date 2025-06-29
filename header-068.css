@@ -1,0 +1,58 @@
+/* Header layout for navigation and login button side by side */
+.main-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+.logo a {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #204f2b;
+  text-decoration: none;
+  letter-spacing: 2px;
+}
+.navigation {
+  display: flex;
+  gap: 32px;
+}
+.navigation a {
+  color: #204f2b;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+.navigation a:hover {
+  background: #204f2b;
+  color: #fff;
+}
+.login-button a {
+  background: #204f2b;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+.login-button a:hover {
+  background: #16351c;
+  color: #ffd700;
+}
+@media (max-width: 700px) {
+  .main-header .container {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .navigation {
+    gap: 16px;
+  }
+  .login-button a {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+}
